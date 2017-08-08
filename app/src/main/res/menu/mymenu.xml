@@ -1,6 +1,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/add"
+        android:title="Edit"
+        app:showAsAction="always"
+        android:icon="@drawable/add"
+        android:visible="false"/>
+
+
+    <item
+        android:id="@+id/edit"
+        android:title="Edit"
+        app:showAsAction="always"
+        android:icon="@drawable/edit"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/delete"
+        android:title="Delete"
+        app:showAsAction="always"
+        android:icon="@drawable/delete"
+        android:visible="false"/>
+
+    <item
         android:id="@+id/mybutton"
         android:icon="@drawable/down"
         android:title=""

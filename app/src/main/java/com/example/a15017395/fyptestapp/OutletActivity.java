@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -18,13 +19,18 @@ import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -47,6 +53,7 @@ public class OutletActivity extends AppCompatActivity {
     LatLng current = new LatLng(0.0,0.0);
     SupportMapFragment mapFragment;
     Outlet outlet;
+    Boolean check = false;
 
 
     @Override
@@ -70,24 +77,34 @@ public class OutletActivity extends AppCompatActivity {
         outletList = (ArrayList<Outlet>) getIntent().getSerializableExtra("outlets");
         setListViewContent(outletList);
 
-}
+    }
 
 
     // create an action bar button
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-
         MenuInflater inflater = getMenuInflater();
-
 //        final MenuItem searchItem = menu.findItem(R.id.search);
 //        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-        inflater.inflate(R.menu.search_menu, menu);
         inflater.inflate(R.menu.mymenu, menu);
+
+        SharedPreferences settings = getSharedPreferences("JSON", MODE_PRIVATE);
+        settings.getInt("id", 0);
+        if (settings.getInt("role_id", 0) == 2){
+            menu.findItem(R.id.edit).setVisible(true);
+            menu.findItem(R.id.delete).setVisible(true);
+            menu.findItem(R.id.add).setVisible(true);
+        } else {
+            menu.findItem(R.id.edit).setVisible(false);
+            menu.findItem(R.id.delete).setVisible(false);
+            menu.findItem(R.id.add).setVisible(false);
+        }
 
         return true;
     }
+
 
     // handle button activities
     @Override
@@ -97,7 +114,46 @@ public class OutletActivity extends AppCompatActivity {
         if (id == R.id.mybutton) {
             finish();
             overridePendingTransition(R.anim.no_change,R.anim.slide_down_animation);
+        } else if (id == R.id.edit){
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+            //Open update outlet
+        } else if (id == R.id.delete){
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+            //Delete outlet
+        }else if (id == R.id.add){
+            LayoutInflater inflater = (LayoutInflater)
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LinearLayout passPhrase =
+                    (LinearLayout) inflater.inflate(R.layout.addoutlet, null);
+            final EditText etPassphrase = (EditText) passPhrase
+                    .findViewById(R.id.editTextOutletName);
+
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+            builder.setTitle("Please Login")
+                    .setView(passPhrase)
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(OutletActivity.this, "Login Fail" +
+                                    etPassphrase.getText().toString(), Toast.LENGTH_LONG).show();
+                        }
+                    })
+
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            EditText outletNameEditText = (EditText) findViewById(R.id.editTextOutletName);
+
+                            HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/addOutlet.php");
+                            request.setMethod("POST");
+                            request.addData("outlet_name", outletNameEditText.getText().toString());
+                            request.execute();
+                        }
+                    });
+
+
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -108,6 +164,7 @@ public class OutletActivity extends AppCompatActivity {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View arg1, int arg2, long arg3) {
+                    check = true;
                     outlet = (Outlet) parent.getItemAtPosition(arg2);
                     current = new LatLng(outletList.get(outlet.getId() - 1).getLatitude(), outletList.get(outlet.getId() - 1).getLongitude());
                     setMapMarker(outlet);
@@ -153,9 +210,9 @@ public class OutletActivity extends AppCompatActivity {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
 
-                    intent = new Intent(getApplicationContext(), StallActivity.class);
-                    intent.putExtra("com.example.MAIN_MESSAGE", Integer.toString(outlet.getId()));
-                    startActivity(intent);
+                        intent = new Intent(getApplicationContext(), StallActivity.class);
+                        intent.putExtra("com.example.MAIN_MESSAGE", Integer.toString(outlet.getId()));
+                        startActivity(intent);
                     }
                 });
             }});

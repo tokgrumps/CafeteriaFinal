@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageSwitcher;
 import android.widget.ListView;
 
@@ -41,11 +42,11 @@ public class HomeFragment extends Fragment {
 
     CustomFloatingActionButton fab;
     ImageSwitcher is;
-    ListView lv;
+    GridView gridView;
 
-    ArrayList<String> alNews = new ArrayList<String>();
     ArrayAdapter aa;
     ArrayList<Outlet> outletList = new ArrayList<Outlet>();
+    static final String[] alNews = new String[] {"Firebake","Birders","Lewin Terrace","The Black Swan","SPRMRKT","The Pillar","Kotobuki","Schmear"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,27 +78,18 @@ public class HomeFragment extends Fragment {
             }
         }, 2000);
 
-        lv = (ListView) view.findViewById(R.id.lvNewsFeed);
 
-        alNews.add("Firebake");
-        alNews.add("Firders");
-        alNews.add("Lewin Terrace");
-        alNews.add("The black swan");
-        alNews.add("SPRMRKT");
-        alNews.add("The Pillar");
-        alNews.add("Kotobuki");
-        alNews.add("Schmear");//no 8
-        aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,alNews);
-        lv.setAdapter(aa);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView = (GridView) view.findViewById(R.id.gridView);
+
+        gridView.setAdapter(new GridAdapter(getContext(), alNews));
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 String[] links = getResources().getStringArray(R.array.link);
                 Uri uri = Uri.parse(links[position]);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
-
             }
         });
 
