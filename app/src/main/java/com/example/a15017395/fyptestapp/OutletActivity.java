@@ -1,35 +1,20 @@
 package com.example.a15017395.fyptestapp;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.PermissionChecker;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,14 +32,13 @@ public class OutletActivity extends AppCompatActivity {
     Intent intent;
     ArrayAdapter aa;
     ListView lv;
-    private GoogleMap map;
     ArrayList<Outlet> outletList;
     LatLng poi_Singapore = new LatLng(1.362424, 103.802342);
     LatLng current = new LatLng(0.0,0.0);
     SupportMapFragment mapFragment;
     Outlet outlet;
     Boolean check = false;
-
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +58,16 @@ public class OutletActivity extends AppCompatActivity {
 
         //Listview stuff
         lv = (ListView) findViewById(R.id.lvOutlet);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent newActivity = new Intent(OutletActivity.this, StallActivity.class);
+                startActivity(newActivity);
+
+            }
+        });
         outletList = (ArrayList<Outlet>) getIntent().getSerializableExtra("outlets");
         setListViewContent(outletList);
 
@@ -121,35 +115,8 @@ public class OutletActivity extends AppCompatActivity {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
             //Delete outlet
         }else if (id == R.id.add){
-            LayoutInflater inflater = (LayoutInflater)
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout passPhrase =
-                    (LinearLayout) inflater.inflate(R.layout.addoutlet, null);
-            final EditText etPassphrase = (EditText) passPhrase
-                    .findViewById(R.id.editTextOutletName);
-
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-            builder.setTitle("Please Login")
-                    .setView(passPhrase)
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(OutletActivity.this, "Login Fail" +
-                                    etPassphrase.getText().toString(), Toast.LENGTH_LONG).show();
-                        }
-                    })
-
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            EditText outletNameEditText = (EditText) findViewById(R.id.editTextOutletName);
-
-                            HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/addOutlet.php");
-                            request.setMethod("POST");
-                            request.addData("outlet_name", outletNameEditText.getText().toString());
-                            request.execute();
-                        }
-                    });
+            Intent i = new Intent(OutletActivity.this, addOutlet.class);
+            startActivity(i);
 
 
         }
@@ -166,7 +133,10 @@ public class OutletActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View arg1, int arg2, long arg3) {
                     check = true;
                     outlet = (Outlet) parent.getItemAtPosition(arg2);
-                    current = new LatLng(outletList.get(outlet.getId() - 1).getLatitude(), outletList.get(outlet.getId() - 1).getLongitude());
+                    if (outletList.get(outlet.getId() - 1) != null) {
+                        current = new LatLng(outletList.get(outlet.getId() - 1).getLatitude(), outletList.get(outlet.getId() - 1).getLongitude());
+                    }
+
                     setMapMarker(outlet);
                 }
             });

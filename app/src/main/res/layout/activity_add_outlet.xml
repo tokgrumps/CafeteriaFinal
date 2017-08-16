@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.a15017395.fyptestapp.addOutlet">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outlet Name:"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outlet Location"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+        <EditText
+            android:id="@+id/editTextLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:onClick="addNewRecordButtonClicked"
+                android:text="Submit" />
+
+            <Button
+                android:id="@+id/buttonClear"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Reset" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

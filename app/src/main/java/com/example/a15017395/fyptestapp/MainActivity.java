@@ -1,45 +1,29 @@
 package com.example.a15017395.fyptestapp;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -48,14 +32,14 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG_RETAINED_FRAGMENT = "ContactFragment";
     ArrayList<Outlet> outletList = new ArrayList<>();
-
-    private ContactFragment mRetainedFragment;
     Button btnLogin, btnRegister, btnLogout;
     TextView username, role;
     LinearLayout user, visitor;
     SharedPreferences settings;
     SharedPreferences.Editor editor;
     Integer roleId = 0;
+    ImageView profile;
+    private ContactFragment mRetainedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,68 +85,41 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
             item.setChecked(true);
             if(getSupportActionBar()!=null){getSupportActionBar().setTitle("Home");}
             HomeFragment homeFragment = new HomeFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.linearlayout_for_fragment,
-                    homeFragment,
-                    homeFragment.getTag())
-                    .commit();
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.linearlayout_for_fragment, homeFragment, homeFragment.getTag()).commit();
 
         } else if (id == R.id.nav_about) {
-            if(getSupportActionBar()!=null){getSupportActionBar().setTitle("About");}
             item.setChecked(true);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle("About");
+            }
             AboutFragment aboutFragment = new AboutFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.linearlayout_for_fragment,
-                    aboutFragment,
-                    aboutFragment.getTag())
-                    .commit();
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.linearlayout_for_fragment, aboutFragment, aboutFragment.getTag()).commit();
 
         } else if (id == R.id.nav_contact) {
-            MyProgressFragment progressFragment = new MyProgressFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.linearlayout_for_fragment,
-                    progressFragment,
-                    progressFragment.getTag())
-                    .commit();
-
-
             item.setChecked(true);
+            MyProgressFragment progressFragment = new MyProgressFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.linearlayout_for_fragment, progressFragment, progressFragment.getTag()).commit();
+
             Handler handler = new Handler();
             Runnable runnable = new Runnable() {
-
                 @Override
                 public void run() {
                     if(getSupportActionBar()!=null){getSupportActionBar().setTitle("Contact");}
                     ContactFragment homeFragment = new ContactFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.linearlayout_for_fragment,
-                            homeFragment,
-                            homeFragment.getTag())
-                            .commitAllowingStateLoss();
-
+                    manager.beginTransaction().replace(R.id.linearlayout_for_fragment, homeFragment, homeFragment.getTag()).commitAllowingStateLoss();
                 }
             };
-
             handler.postDelayed(runnable, 350);
-
-
-
 
         } else if (id == R.id.nav_feedback) {
             item.setChecked(true);
             if(getSupportActionBar()!=null){getSupportActionBar().setTitle("Send Feedback");}
             FeedbackFragment feedbackFragment = new FeedbackFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.linearlayout_for_fragment,
-                    feedbackFragment,
-                    feedbackFragment.getTag())
-                    .commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.linearlayout_for_fragment, feedbackFragment, feedbackFragment.getTag()).commit();
         }
 
 
@@ -200,8 +157,10 @@ public class MainActivity extends AppCompatActivity
         btnLogout = (Button)hView.findViewById(R.id.btnLogout);
         user = (LinearLayout)hView.findViewById(R.id.user);
         visitor = (LinearLayout)hView.findViewById(R.id.visitor);
+        profile = (ImageView) hView.findViewById(R.id.ivProfile);
         username = (TextView)hView.findViewById(R.id.username);
         role = (TextView)hView.findViewById(R.id.role);
+
 
         roleId = settings.getInt("role_id", 0);
 
@@ -209,15 +168,19 @@ public class MainActivity extends AppCompatActivity
             //visitor
             user.setVisibility(View.GONE);
             visitor.setVisibility(View.VISIBLE);
+            profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.visitor));
         } else {
             //user
             username.setText(settings.getString("username", ""));
             if(roleId == 1){
                 role.setText("User");
+                profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.user));
             } else if (roleId == 2){
                 role.setText("Admin");
+                profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.admin));
             } else if (roleId == 3){
                 role.setText("Stall Owner");
+                profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.stall_owner));
             }
 
             user.setVisibility(View.VISIBLE);
@@ -225,6 +188,7 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
 
     public void setButtonClick(){
         editor = settings.edit();
@@ -236,18 +200,30 @@ public class MainActivity extends AppCompatActivity
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i); }});}
 
+        if (btnRegister != null) {
+            btnRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(MainActivity.this, RegisterActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
+
         if (btnLogout != null){
             btnLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editor.putString("apikey", "0");
+                    editor.putInt("role_id", 0);
                     editor.putInt("id", 0);
                     editor.commit();
+                    profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.visitor));
                     user.setVisibility(View.GONE);
                     visitor.setVisibility(View.VISIBLE);
                     Toast.makeText(MainActivity.this, "Logged out",
                             Toast.LENGTH_LONG).show();
                 }});}
+
     }
 
 
