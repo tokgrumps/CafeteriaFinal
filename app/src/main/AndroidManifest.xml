@@ -34,7 +34,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StallActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".addOutlet"></activity>
     </application>
 
 </manifest>

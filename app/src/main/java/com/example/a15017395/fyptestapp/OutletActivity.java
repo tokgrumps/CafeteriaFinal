@@ -1,20 +1,28 @@
 package com.example.a15017395.fyptestapp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,6 +46,7 @@ public class OutletActivity extends AppCompatActivity {
     SupportMapFragment mapFragment;
     Outlet outlet;
     Boolean check = false;
+    AlertDialog dialog;
     private GoogleMap map;
 
     @Override
@@ -115,8 +124,8 @@ public class OutletActivity extends AppCompatActivity {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
             //Delete outlet
         }else if (id == R.id.add){
-            Intent i = new Intent(OutletActivity.this, addOutlet.class);
-            startActivity(i);
+            addOutletfunc();
+
 
 
         }
@@ -130,14 +139,14 @@ public class OutletActivity extends AppCompatActivity {
             lv.setAdapter(aa);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View arg1, int arg2, long arg3) {
+                public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
                     check = true;
-                    outlet = (Outlet) parent.getItemAtPosition(arg2);
+                    outlet = (Outlet) parent.getItemAtPosition(position);
                     if (outletList.get(outlet.getId() - 1) != null) {
                         current = new LatLng(outletList.get(outlet.getId() - 1).getLatitude(), outletList.get(outlet.getId() - 1).getLongitude());
-                    }
 
                     setMapMarker(outlet);
+                }
                 }
             });
         }
@@ -186,6 +195,66 @@ public class OutletActivity extends AppCompatActivity {
                     }
                 });
             }});
+
+    }
+
+    private void addOutletfunc() {
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout addOutlet =
+                (LinearLayout) inflater.inflate(R.layout.addoutlet, null);
+
+        final EditText etName = (EditText) addOutlet.findViewById(R.id.editTextName);
+        final EditText etLocation = (EditText) addOutlet.findViewById(R.id.editTextLocation);
+
+        dialog = new AlertDialog.Builder(this)
+                .setView(addOutlet)
+                .setTitle("Add Outlet")
+                .setNegativeButton("Reset", null)
+                .setPositiveButton("Submit", null)
+                .create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(final DialogInterface dialog) {
+
+                Button btnReset = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
+                Button btnSubmit = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                btnSubmit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/addOutlet.php");
+                        request.setMethod("POST");
+                        request.addData("outlet_name", etName.getText().toString());
+                        request.addData("outlet_location", etLocation.getText().toString());
+                        request.execute();
+                        Toast.makeText(OutletActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
+                        lv = (ListView) findViewById(R.id.lvOutlet);
+                        lv.invalidateViews();
+                        dialog.dismiss();
+                        try {
+                            finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                btnReset.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        etName.setText("");
+                        etLocation.setText("");
+                    }
+                });
+            }
+
+        });
+        dialog.show();
+
 
     }
 
