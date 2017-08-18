@@ -36,8 +36,8 @@ public class userAdapter extends ArrayAdapter<user> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new userHolder();
-//            holder.username = (TextView)row.findViewById(R.id.txtUsername);
-//            holder.role = (TextView)row.findViewById(R.id.txtRole);
+            holder.username = (TextView)row.findViewById(R.id.textViewFullName);
+            holder.role = (TextView)row.findViewById(R.id.textViewUsername);
 
 
             row.setTag(holder);

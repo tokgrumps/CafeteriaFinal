@@ -15,10 +15,13 @@ import android.widget.Toast;
 import com.robertlevonyan.views.customfloatingactionbutton.CustomFloatingActionButton;
 import com.robertlevonyan.views.customfloatingactionbutton.OnFabClickListener;
 
+import org.json.JSONObject;
+
 
 public class RegisterActivity extends AppCompatActivity {
     EditText etFname, etLname, etUsername, etPassword, etEmail, etContacts;
     CustomFloatingActionButton fabCreate;
+    boolean goodToGo;
 
     public static void hideSoftKeyboard(Activity activity) {
         final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -41,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.custom_logo, null);
         Button login = (Button) mCustomView.findViewById(R.id.btn_register);
+        goodToGo = true;
         login.setText("Login");
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,35 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
         etContacts = (EditText) findViewById(R.id.etContact);
         fabCreate = (CustomFloatingActionButton) findViewById(R.id.fabCreate);
 
-        final String email = etEmail.getText().toString().trim();
-        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-//        etEmail.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                if (email.matches(emailPattern) && s.length() > 0) {
-//                    Toast.makeText(getApplicationContext(), "valid email address", Toast.LENGTH_SHORT).show();
-//                    // or
-//                    etEmail.setText("valid email");
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
-//                    //or
-//                    etEmail.setText("invalid email");
-//                }
-//            }
-//
-//
-//        });
-
         fabCreate.setOnFabClickListener(new OnFabClickListener() {
             @Override
             public void onFabClick(View v) {
@@ -102,61 +77,116 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerUserButtonClicked(View view) {
-
-        // Log.d(TAG, "registerUserButtonClicked()...");
-
+        goodToGo = true;
 
         HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/registerUser.php");
         request.setMethod("POST");
 
-        if (etFname.getText().toString().length() == 0) {
-            etFname.setError("First name have not been entered");
-            etFname.requestFocus();
+        String firstName = etFname.getText().toString().trim();
+        if (firstName.length() == 0) {
+            etFname.setError("Please enter first name");
 
-        } else if (etFname.getText().toString().length() <= 2) {
-            etFname.setError("First name must have at least 3 characters");
-            etFname.requestFocus();
+            goodToGo = false;
+
+        } else if (!firstName.matches("^[A-Za-z\\s]+")) {
+            etFname.setError("Invalid First Name");
+            goodToGo = false;
 
         } else {
             request.addData("first_name", etFname.getText().toString());
+
         }
 
-        if (etLname.getText().toString().length() == 0) {
-            etLname.setError("Last Name have not been entered");
-            etLname.requestFocus();
+        String lastName = etLname.getText().toString().trim();
+        if (lastName.length() == 0) {
+            etLname.setError("Please enter Last name");
+            goodToGo = false;
 
-        } else if (etLname.getText().toString().length() <= 2) {
-            etLname.setError("Last Name must have at least 3 characters");
-            etLname.requestFocus();
+        } else if (!lastName.matches("^[A-Za-z\\s]+")) {
+            etLname.setError("Invalid Last Name");
+            goodToGo = false;
 
         } else {
             request.addData("last_name", etLname.getText().toString());
         }
 
+        String username = etUsername.getText().toString().trim();
+        if (username.length() == 0) {
+            etUsername.setError("please enter your username");
+            goodToGo = false;
 
-        request.addData("username", etUsername.getText().toString());
+        } else if (!username.matches("^[A-Za-z0-9\\s]+")) {
+            etUsername.setError("invalid username");
+            goodToGo = false;
 
-        request.addData("password", etPassword.getText().toString());
-
-        request.addData("email", etEmail.getText().toString());
-        request.addData("contact_number", etContacts.getText().toString());
-
-
-        //if
-        //sdfghjk
-        request.execute();
-
-        Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show();
-
-        try {
-//            String jsonString = request.getResponse();
-//            Log.d(TAG, "jsonString: " + jsonString);
-
-            finish();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            request.addData("username", etUsername.getText().toString());
         }
 
-        // Toast.makeText(this, "Please fill in all the empty fields", Toast.LENGTH_LONG).show();
+        String password = etPassword.getText().toString().trim();
+        if (password.length() == 0) {
+
+            etPassword.setError("Please enter password");
+            goodToGo = false;
+
+        } else if (!password.matches("^[A-Za-z0-9\\s]+") && password.length() < 9 || password.length() > 13) {
+            etPassword.setError("Invalid password");
+            goodToGo = false;
+
+        } else {
+            request.addData("password", etPassword.getText().toString());
+        }
+
+        String email = etEmail.getText().toString().trim();
+        if (email.length() == 0) {
+            etEmail.setError("Please enter your email");
+            goodToGo = false;
+
+        } else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+")) {
+            etEmail.setError("Invalid Email Address");
+            goodToGo = false;
+
+        } else {
+            request.addData("email", etEmail.getText().toString());
+        }
+
+        String contactNo = etContacts.getText().toString().trim();
+        if (contactNo.length() == 0) {
+            etContacts.setError("please enter contact No");
+            goodToGo = false;
+
+
+        } else if (contactNo.length() < 6 || contactNo.length() > 13) {
+            etContacts.setError("invalid contactNo");
+            goodToGo = false;
+
+        } else {
+            request.addData("contact_number", etContacts.getText().toString());
+        }
+
+        //String jsonString = request.getResponse();
+
+        if (goodToGo){
+            request.execute();
+            try{
+                String jsonString = request.getResponse();
+//            Log.d(TAG, "jsonString: " + jsonString);
+                JSONObject results = new JSONObject(jsonString);
+                String status = results.getString("status");
+                if(status.equalsIgnoreCase("error") ){
+                    Toast.makeText(RegisterActivity.this, "Username exixts !", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }else{
+
+            Toast.makeText(RegisterActivity.this, "Register unsuccessfull", Toast.LENGTH_LONG).show();
+        }
     }
 }

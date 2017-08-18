@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     Integer roleId = 0;
     ImageView profile;
     private ContactFragment mRetainedFragment;
+    NavigationView navigationView;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity
 
         setElements();
         setButtonClick();
+
     }
 
     @Override
@@ -120,6 +124,13 @@ public class MainActivity extends AppCompatActivity
             if(getSupportActionBar()!=null){getSupportActionBar().setTitle("Send Feedback");}
             FeedbackFragment feedbackFragment = new FeedbackFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.linearlayout_for_fragment, feedbackFragment, feedbackFragment.getTag()).commit();
+
+        } else if (id == R.id.manage_account) {
+            item.setChecked(true);
+            if(getSupportActionBar()!=null){getSupportActionBar().setTitle("Manage Account");}
+            intent = new Intent(getApplicationContext(), UserListActivity.class);
+            startActivity(intent);
+
         }
 
 
@@ -161,6 +172,9 @@ public class MainActivity extends AppCompatActivity
         username = (TextView)hView.findViewById(R.id.username);
         role = (TextView)hView.findViewById(R.id.role);
 
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+
 
         roleId = settings.getInt("role_id", 0);
 
@@ -168,18 +182,22 @@ public class MainActivity extends AppCompatActivity
             //visitor
             user.setVisibility(View.GONE);
             visitor.setVisibility(View.VISIBLE);
+            nav_Menu.findItem(R.id.manage_account).setVisible(false);
             profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.visitor));
         } else {
             //user
             username.setText(settings.getString("username", ""));
             if(roleId == 1){
                 role.setText("User");
+                nav_Menu.findItem(R.id.manage_account).setVisible(false);
                 profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.user));
             } else if (roleId == 2){
                 role.setText("Admin");
+                nav_Menu.findItem(R.id.manage_account).setVisible(true);
                 profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.admin));
             } else if (roleId == 3){
                 role.setText("Stall Owner");
+                nav_Menu.findItem(R.id.manage_account).setVisible(false);
                 profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.stall_owner));
             }
 
@@ -216,7 +234,10 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     editor.putInt("role_id", 0);
                     editor.putInt("id", 0);
+                    navigationView = (NavigationView) findViewById(R.id.nav_view);
+                    Menu nav_Menu = navigationView.getMenu();
                     editor.commit();
+                    nav_Menu.findItem(R.id.manage_account).setVisible(false);
                     profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.visitor));
                     user.setVisibility(View.GONE);
                     visitor.setVisibility(View.VISIBLE);

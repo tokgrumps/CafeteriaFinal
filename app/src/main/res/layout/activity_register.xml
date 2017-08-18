@@ -149,7 +149,7 @@
                             android:ems="10"
                             android:fontFamily="sans-serif-condensed"
                             android:hint="Contact No."
-                            android:inputType="textPhonetic"
+                            android:inputType="number"
                             android:textColor="@android:color/white"
                             android:textColorHint="@android:color/white"
                             android:typeface="normal" />

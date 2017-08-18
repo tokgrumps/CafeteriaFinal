@@ -21,7 +21,7 @@
             android:value="AIzaSyCcZsCDYdUW0TIe6k6p9zEADCBcflyTExg" />
 
         <activity
-            android:name="com.example.a15017395.fyptestapp.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -34,6 +34,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StallActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".UserListActivity" />
+        <activity android:name=".DisplayUserInfoActivity"></activity>
     </application>
 
 </manifest>

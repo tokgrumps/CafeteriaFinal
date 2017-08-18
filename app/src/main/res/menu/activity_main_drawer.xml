@@ -20,6 +20,11 @@
         android:id="@+id/nav_feedback"
         android:title="@string/feedback" />
 
+    <item
+        android:visible="false"
+        android:id="@+id/manage_account"
+        android:title="Manage Accounts" />
+
 
 </menu>
 
