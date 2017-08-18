@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(getApplicationContext(), UserListActivity.class);
             startActivity(intent);
 
-        }
+        } //TODO Celest you go come down here to post malone
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
