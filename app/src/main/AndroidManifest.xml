@@ -35,7 +35,8 @@
         <activity android:name=".StallActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserListActivity" />
-        <activity android:name=".DisplayUserInfoActivity"></activity>
+        <activity android:name=".DisplayUserInfoActivity" />
+        <activity android:name=".OutletListActivity"></activity>
     </application>
 
 </manifest>

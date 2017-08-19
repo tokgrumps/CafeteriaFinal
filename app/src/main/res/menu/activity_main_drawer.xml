@@ -21,11 +21,16 @@
         android:title="@string/feedback" />
 
     <item
-        android:visible="false"
-        android:id="@+id/manage_account"
-        android:title="Manage Accounts" />
+    android:visible="false"
+    android:id="@+id/manage_account"
+    android:title="Manage Accounts" />
 
-    <!--TODO come fk here also-->
+    <item
+        android:visible="false"
+        android:id="@+id/manage_outlet"
+        android:title="Manage Outlet" />
+
+
 
 
 </menu>

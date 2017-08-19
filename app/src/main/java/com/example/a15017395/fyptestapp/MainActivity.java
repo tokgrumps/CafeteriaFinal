@@ -127,11 +127,21 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.manage_account) {
             item.setChecked(true);
-            if(getSupportActionBar()!=null){getSupportActionBar().setTitle("Manage Account");}
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle("Manage Account");
+            }
             intent = new Intent(getApplicationContext(), UserListActivity.class);
             startActivity(intent);
 
-        } //TODO Celest you go come down here to post malone
+        }  else if (id == R.id.manage_outlet) {
+                item.setChecked(true);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle("Manage Outlet");
+                }
+                intent = new Intent(getApplicationContext(), OutletListActivity.class);
+                startActivity(intent);
+
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

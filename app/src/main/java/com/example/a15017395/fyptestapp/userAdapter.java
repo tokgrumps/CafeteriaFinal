@@ -50,7 +50,7 @@ public class userAdapter extends ArrayAdapter<user> {
         user User = userList.get(position);
         holder.role.setText(User.getUsername());
         holder.username.setText(User.getFirstName() + " " + User.getLastName());
-       // holder.role.setText(User.getRole());
+        // holder.role.setText(User.getRole());
         return row;
     }
 
@@ -59,6 +59,7 @@ public class userAdapter extends ArrayAdapter<user> {
         TextView username;
         TextView role;
     }
+
 
 
 
