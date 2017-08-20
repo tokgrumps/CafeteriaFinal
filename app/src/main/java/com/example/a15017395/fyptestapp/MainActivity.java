@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.manage_menu) {
             item.setChecked(true);
             if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle("Manage Stall");
+                getSupportActionBar().setTitle("Manage Menu");
             }
             intent = new Intent(getApplicationContext(), MenuActivity.class);
             startActivity(intent);
@@ -162,9 +162,9 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.manage_meal) {
             item.setChecked(true);
             if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle("Manage Stall");
+                getSupportActionBar().setTitle("Manage Meal");
             }
-            intent = new Intent(getApplicationContext(),MealActivity.class);
+            intent = new Intent(getApplicationContext(), menuMealActivity.class);
             startActivity(intent);
         }
 

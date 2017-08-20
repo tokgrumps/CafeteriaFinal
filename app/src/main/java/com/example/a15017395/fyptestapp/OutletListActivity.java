@@ -163,15 +163,16 @@ public class OutletListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.mybutton) {
-            finish();
-            overridePendingTransition(R.anim.no_change,R.anim.slide_down_animation);
-        }else if (id == R.id.add){
+        if (id == R.id.add){
             intent = new Intent(getApplicationContext(), addOutlet.class);
             startActivity(intent);
 
 
+        }else if (id == R.id.homepage){
+            intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -34,7 +34,7 @@ public class StallsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         // getting attached intent data
-        outlet_id = intent.getIntExtra("outlet_id", - 1);
+        outlet_id = intent.getIntExtra("outlet_id", -1);
 
         // displaying selected product name
         //TODO 6 Declare and create a HttpRequest object, with the URL string as the argument
@@ -58,10 +58,10 @@ public class StallsActivity extends AppCompatActivity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
                 Stall stall = new Stall();
-                stall.setId(Integer.parseInt(jsonObj.getString("stall_id")));
-                stall.setStallName(jsonObj.getString("stall_name"));
-                stall.setStallDetail(jsonObj.getString("stall_details"));
-                stall.setOpeningHour(jsonObj.getString("opening_hour"));
+                stall.setstall_id(Integer.parseInt(jsonObj.getString("stall_id")));
+                stall.setstall_name(jsonObj.getString("stall_name"));
+                stall.setstall_details(jsonObj.getString("stall_details"));
+                stall.setopening_hour(jsonObj.getString("opening_hour"));
                 stallList.add(stall);
                 adapter.notifyDataSetChanged();
 
@@ -86,7 +86,7 @@ public class StallsActivity extends AppCompatActivity {
                 Stall stall = (Stall)parent.getItemAtPosition(arg2);
 
                 stallintent = new Intent(getApplicationContext(), editStallActivity.class);
-                stallintent.putExtra("com.example.MAIN_MESSAGE", Integer.toString(stall.getId()));
+                stallintent.putExtra("com.example.MAIN_MESSAGE", Integer.toString(stall.getstall_id()));
                 startActivity(stallintent);
             }
         });
@@ -121,14 +121,14 @@ public class StallsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.mybutton) {
-            finish();
-            overridePendingTransition(R.anim.no_change,R.anim.slide_down_animation);
-        }else if (id == R.id.add){
+         if (id == R.id.add){
             stallintent = new Intent(getApplicationContext(), addStall.class);
             startActivity(stallintent);
 
 
+        }else if (id == R.id.homepage){
+            stallintent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(stallintent);
         }
 
         return super.onOptionsItemSelected(item);

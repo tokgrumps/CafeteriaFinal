@@ -51,9 +51,9 @@ public class StallArrayAdapter extends ArrayAdapter<Stall> {
         }
 
         Stall stall = stallList.get(position);
-        holder.StallName.setText(stall.getStallName());
-        holder.StallDetail.setText(stall.getStallDetail());
-        holder.OpeningHours.setText(stall.getOpeningHour());
+        holder.StallName.setText(stall.getstall_name());
+        holder.StallDetail.setText(stall.getstall_details());
+        holder.OpeningHours.setText(stall.getopening_hour());
         return row;
     }
 

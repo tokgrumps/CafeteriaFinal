@@ -46,7 +46,10 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".MealActivity" />
         <activity android:name=".addMenu" />
-        <activity android:name=".editMenuActivity"></activity>
+        <activity android:name=".editMenuActivity" />
+        <activity android:name=".menuMealActivity" />
+        <activity android:name=".AddMeal" />
+        <activity android:name=".editMeal"></activity>
     </application>
 
 </manifest>

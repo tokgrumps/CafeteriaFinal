@@ -16,11 +16,21 @@
         android:visible="false"/>
 
     <item
-        android:id="@+id/delete"
-        android:title="Delete"
-        app:showAsAction="always"
-        android:icon="@drawable/delete"
-        android:visible="false"/>
+    android:id="@+id/delete"
+    android:title="Delete"
+    app:showAsAction="always"
+    android:icon="@drawable/delete"
+    android:visible="false"/>
+
+    <item android:id="@+id/homepage"
+        android:title="Home"
+        app:showAsAction="ifRoom"  ></item>
+
+
+    <item android:id="@+id/AddMeal"
+        android:title="Add Meal"
+        app:showAsAction="ifRoom"  ></item>
+
 
     <item
         android:id="@+id/mybutton"

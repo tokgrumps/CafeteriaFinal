@@ -8,10 +8,11 @@ import java.io.Serializable;
 
 public class Stall{
 
-    private int id;
-    private String stallName;
-    private String stallDetail;
-    private String openingHour;
+    private int stall_id;
+    private int outlet_id;
+    private String stall_name;
+    private String stall_details;
+    private String opening_hour;
 
 
 
@@ -21,37 +22,45 @@ public class Stall{
         super();
     }
 
-    public int getId() {
-        return id;
+    public int getstall_id() {
+        return stall_id;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setstall_id(int stall_id) {
+        this.stall_id = stall_id;
     }
 
-    public String getStallName() {
-        return stallName ;
+    public int getoutlet_id() {
+        return outlet_id;
     }
-    public void setStallName(String StallName) {
-        this.stallName = stallName;
+    public void setoutlet_id(int outlet_id) {
+        this.outlet_id = outlet_id;
     }
-    public String getStallDetail() {
-        return stallDetail;
+
+    public String getstall_name() {
+        return stall_name ;
     }
-    public void setStallDetail(String StallDetail) {
-        this.stallDetail = stallDetail;
+    public void setstall_name(String stall_name) {
+        this.stall_name = stall_name;
     }
-    public String getOpeningHour() {
-        return openingHour;
+    public String getstall_details() {
+        return stall_details;
     }
-    public void setOpeningHour(String OpeningHour) {
-        this.openingHour = openingHour;
+    public void setstall_details(String stall_details) {
+        this.stall_details = stall_details;
+    }
+    public String getopening_hour() {
+        return opening_hour;
+    }
+    public void setopening_hour(String opening_hour) {
+        this.opening_hour = opening_hour;
     }
 
 
 
 
     public String toString(){
-        return "stall [stall_id =" + id + ", stall_name =" + stallName +
-                ", stall_details =" + stallDetail +  ", opening_hour =" + openingHour +  "]";
+        return "stall [stall_id =" + stall_id + ", outlet_id =" + outlet_id +
+                ", stall_name =" +  stall_name +
+                ", stall_details =" + stall_details +  ", opening_hour =" + opening_hour +  "]";
     }
 }

@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.a15017395.fyptestapp.MealActivity">
+    tools:context="com.example.a15017395.fyptestapp.menuMealActivity">
 
 
     <ListView
-        android:id="@+id/lvMeal"
+        android:id="@+id/lvMenuMeal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
