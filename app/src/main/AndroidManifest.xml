@@ -36,7 +36,10 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserListActivity" />
         <activity android:name=".DisplayUserInfoActivity" />
-        <activity android:name=".OutletListActivity"></activity>
+        <activity android:name=".OutletListActivity" />
+        <activity android:name=".addOutlet" />
+        <activity android:name=".editOutlet" />
+        <activity android:name=".StallListActivity"></activity>
     </application>
 
 </manifest>

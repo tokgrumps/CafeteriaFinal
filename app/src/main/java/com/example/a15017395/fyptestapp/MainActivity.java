@@ -141,10 +141,17 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), OutletListActivity.class);
                 startActivity(intent);
 
+        }else if (id == R.id.manage_stall) {
+            item.setChecked(true);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle("Manage Stall");
+            }
+            intent = new Intent(getApplicationContext(), StallList.class);
+            startActivity(intent);
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -203,11 +210,16 @@ public class MainActivity extends AppCompatActivity
                 profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.user));
             } else if (roleId == 2){
                 role.setText("Admin");
+                nav_Menu.findItem(R.id.nav_contact).setVisible(false);
+                nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
                 nav_Menu.findItem(R.id.manage_account).setVisible(true);
+                nav_Menu.findItem(R.id.manage_outlet).setVisible(true);
+                nav_Menu.findItem(R.id.manage_stall).setVisible(true);
                 profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.admin));
             } else if (roleId == 3){
                 role.setText("Stall Owner");
                 nav_Menu.findItem(R.id.manage_account).setVisible(false);
+                nav_Menu.findItem(R.id.manage_outlet).setVisible(false);
                 profile.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.stall_owner));
             }
 

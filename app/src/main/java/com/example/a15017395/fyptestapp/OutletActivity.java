@@ -95,15 +95,7 @@ public class OutletActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences("JSON", MODE_PRIVATE);
         settings.getInt("id", 0);
-        if (settings.getInt("role_id", 0) == 2){
-            menu.findItem(R.id.edit).setVisible(true);
-            menu.findItem(R.id.delete).setVisible(true);
-            menu.findItem(R.id.add).setVisible(true);
-        } else {
-            menu.findItem(R.id.edit).setVisible(false);
-            menu.findItem(R.id.delete).setVisible(false);
-            menu.findItem(R.id.add).setVisible(false);
-        }
+
 
         return true;
     }
@@ -117,15 +109,6 @@ public class OutletActivity extends AppCompatActivity {
         if (id == R.id.mybutton) {
             finish();
             overridePendingTransition(R.anim.no_change,R.anim.slide_down_animation);
-        } else if (id == R.id.edit){
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-            //Open update outlet
-        } else if (id == R.id.delete){
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-            //Delete outlet
-        }else if (id == R.id.add){
-            addOutletfunc();
-
 
 
         }
@@ -198,64 +181,8 @@ public class OutletActivity extends AppCompatActivity {
 
     }
 
-    private void addOutletfunc() {
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout addOutlet =
-                (LinearLayout) inflater.inflate(R.layout.addoutlet, null);
-
-        final EditText etName = (EditText) addOutlet.findViewById(R.id.editTextName);
-        final EditText etLocation = (EditText) addOutlet.findViewById(R.id.editTextLocation);
-
-        dialog = new AlertDialog.Builder(this)
-                .setView(addOutlet)
-                .setTitle("Add Outlet")
-                .setNegativeButton("Reset", null)
-                .setPositiveButton("Submit", null)
-                .create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-            @Override
-            public void onShow(final DialogInterface dialog) {
-
-                Button btnReset = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
-                Button btnSubmit = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                btnSubmit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/addOutlet.php");
-                        request.setMethod("POST");
-                        request.addData("outlet_name", etName.getText().toString());
-                        request.addData("outlet_location", etLocation.getText().toString());
-                        request.execute();
-                        Toast.makeText(OutletActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
-                        lv = (ListView) findViewById(R.id.lvOutlet);
-                        lv.invalidateViews();
-                        dialog.dismiss();
-                        try {
-                            finish();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-                btnReset.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        etName.setText("");
-                        etLocation.setText("");
-                    }
-                });
-            }
-
-        });
-        dialog.show();
 
 
     }
 
-}
+

@@ -64,13 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
         fabCreate = (CustomFloatingActionButton) findViewById(R.id.fabCreate);
 
         fabCreate.setOnFabClickListener(new OnFabClickListener() {
-            @Override
-            public void onFabClick(View v) {
-                registerUserButtonClicked(v);
-            }
-        });
+        @Override
+        public void onFabClick(View v) {
+            registerUserButtonClicked(v);
+        }
+    });
 
-    }
+}
 
     protected void onStart() {
         super.onStart();

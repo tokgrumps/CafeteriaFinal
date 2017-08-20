@@ -30,6 +30,11 @@
         android:id="@+id/manage_outlet"
         android:title="Manage Outlet" />
 
+    <item
+        android:visible="false"
+        android:id="@+id/manage_stall"
+        android:title="Manage Stall" />
+
 
 
 
