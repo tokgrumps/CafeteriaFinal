@@ -35,7 +35,15 @@
         android:id="@+id/manage_stall"
         android:title="Manage Stall" />
 
+    <item
+        android:visible="false"
+        android:id="@+id/manage_menu"
+        android:title="Manage Menu" />
 
+    <item
+        android:visible="false"
+        android:id="@+id/manage_meal"
+        android:title="Manage Meal" />
 
 
 </menu>

@@ -45,6 +45,6 @@ public class Menu {
 
     @Override
     public String toString() {
-        return "Menu [menu_id=" + menu_id + ", menu_category=" + menu_category + " , menu_promotion=" + menu_promotion + " , menu_availability=" + menu_availability + " ]";
+        return getMenu_category() + " " + getMenu_availability()  + " " + getMenu_promotion();
     }
 }

@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.a15017395.fyptestapp.StallListActivity">
+    android:orientation="vertical"
+    tools:context="com.example.a15017395.fyptestapp.MenuActivity">
+
 
     <ListView
-        android:id="@+id/lvOutletStallList"
+        android:id="@+id/lvMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
 
 </LinearLayout>

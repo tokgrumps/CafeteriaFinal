@@ -39,7 +39,14 @@
         <activity android:name=".OutletListActivity" />
         <activity android:name=".addOutlet" />
         <activity android:name=".editOutlet" />
-        <activity android:name=".StallListActivity"></activity>
+        <activity android:name=".StallListActivity" />
+        <activity android:name=".StallsActivity" />
+        <activity android:name=".addStall" />
+        <activity android:name=".editStallActivity" />
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".MealActivity" />
+        <activity android:name=".addMenu" />
+        <activity android:name=".editMenuActivity"></activity>
     </application>
 
 </manifest>

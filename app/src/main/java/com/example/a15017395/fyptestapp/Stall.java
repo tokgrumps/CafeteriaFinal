@@ -1,16 +1,18 @@
 package com.example.a15017395.fyptestapp;
 
+import java.io.Serializable;
+
 /**
  * Created by 15056158 on 18/8/2017.
  */
 
-public class Stall {
+public class Stall{
 
     private int id;
     private String stallName;
     private String stallDetail;
     private String openingHour;
-    private String stallImage;
+
 
 
 
@@ -45,16 +47,11 @@ public class Stall {
         this.openingHour = openingHour;
     }
 
-    public String getStallImage() {
-        return stallImage;
-    }
-    public void setStallImage(String StallImage) {
-        this.stallImage = stallImage;
-    }
 
 
 
     public String toString(){
-        return getStallName() + " " + getStallDetail() + " " + getOpeningHour() + " " + getStallImage();
+        return "stall [stall_id =" + id + ", stall_name =" + stallName +
+                ", stall_details =" + stallDetail +  ", opening_hour =" + openingHour +  "]";
     }
 }
