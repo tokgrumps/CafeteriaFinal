@@ -14,7 +14,7 @@ import org.json.JSONObject;
 @SuppressLint("NewApi")
 public class editStallActivity extends AppCompatActivity {
 
-    private String Id;
+    private String stall_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class editStallActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-        Id = intent.getStringExtra("stall_id");
-        HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/getOutletDetail.php?Id=" + Id);
+        stall_id = intent.getStringExtra("stall_id");
+        HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/getStallListDetails.php?stall_id=" + stall_id);
         request.setMethod("GET");
         request.execute();
 
@@ -40,9 +40,9 @@ public class editStallActivity extends AppCompatActivity {
             EditText stallNameET = (EditText) findViewById(R.id.editTextStallName);
             stallNameET.setText(jsonObj.getString("stall_name"));
             EditText stallDetailET = (EditText) findViewById(R.id.editTextStallDetail);
-            stallDetailET.setText(jsonObj.getString("stall_detail"));
+            stallDetailET.setText(jsonObj.getString("stall_details"));
             EditText openingHoursET = (EditText) findViewById(R.id.editTextOpeningHour);
-            openingHoursET.setText(jsonObj.getString("opening_hours"));
+            openingHoursET.setText(jsonObj.getString("opening_hour"));
 
 
 
@@ -66,7 +66,7 @@ public class editStallActivity extends AppCompatActivity {
         request.addData("stall_name", stallNameET.getText().toString());
         request.addData("stall_detail", stallDetailET.getText().toString());
         request.addData("opening_hours", openingHoursET.getText().toString());
-        request.addData("stall_id", Id);
+        request.addData("stall_id", stall_id);
 
         request.execute();
 
@@ -87,7 +87,7 @@ public class editStallActivity extends AppCompatActivity {
         request.setMethod("POST");
 
 
-        request.addData("stall_id", Id);
+        request.addData("stall_id", stall_id);
         request.execute();
 
 
