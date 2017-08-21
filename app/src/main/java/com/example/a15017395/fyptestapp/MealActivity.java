@@ -80,7 +80,7 @@ public class MealActivity extends AppCompatActivity {
                 Meal meal = (Meal)parent.getItemAtPosition(arg2);
 
                 mealintent = new Intent(getApplicationContext(), editMeal.class);
-                mealintent.putExtra("com.example.MAIN_MESSAGE", Integer.toString(meal.getmealId()));
+                mealintent.putExtra("meal_id", Integer.toString(meal.getmealId()));
                 startActivity(mealintent);
             }
         });

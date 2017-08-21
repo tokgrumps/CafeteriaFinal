@@ -112,40 +112,5 @@ public class StallListActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    // create an action bar button
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-//        final MenuItem searchItem = menu.findItem(R.id.search);
-//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        inflater.inflate(R.menu.mymenu, menu);
-
-        SharedPreferences settings = getSharedPreferences("JSON", MODE_PRIVATE);
-        settings.getInt("id", 0);
-        if (settings.getInt("role_id", 0) == 2){
-            menu.findItem(R.id.add).setVisible(true);
-        } else {
-            menu.findItem(R.id.add).setVisible(false);
-        }
-
-        return true;
-    }
-
-
-    // handle button activities
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.homepage){
-            intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
 }

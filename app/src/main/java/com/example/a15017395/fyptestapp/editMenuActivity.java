@@ -18,7 +18,7 @@ import org.json.JSONObject;
 @SuppressLint("NewApi")
 public class editMenuActivity extends AppCompatActivity {
 
-    private String menu_id;
+    private int menu_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +30,14 @@ public class editMenuActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         Intent intent = getIntent();
-        menu_id = intent.getStringExtra("com.example.MAIN_MESSAGE");
+        menu_id = intent.getIntExtra("menu_id", -1);
         HttpRequest request= new HttpRequest("https://night-vibes.000webhostapp.com/getMenuDetail.php?menu_id=" + menu_id);
         request.setMethod("GET");
         request.execute();
 
         try{
             String jsonString = request.getResponse();
+            System.out.println(jsonString);
             JSONObject jsonObj = new JSONObject(jsonString);
             // TODO 01: Set values in the EditText fields
 
@@ -72,7 +73,7 @@ public class editMenuActivity extends AppCompatActivity {
         request.addData("menu_category",menuCategory.getText().toString());
         request.addData("menu_promotion",menuPromotion.getText().toString());
         request.addData("menu_availability",menuAvailability.getText().toString());
-        request.addData("menu_id", menu_id);
+        request.addData("menu_id", ""+menu_id);
 
         request.execute();
 
@@ -98,7 +99,7 @@ public class editMenuActivity extends AppCompatActivity {
                         HttpRequest request= new HttpRequest("https://night-vibes.000webhostapp.com/deleteMenu.php");
                         request.setMethod("POST");
 
-                        request.addData("menu_id",menu_id);
+                        request.addData("menu_id", ""+menu_id);
                         request.execute();
 
 

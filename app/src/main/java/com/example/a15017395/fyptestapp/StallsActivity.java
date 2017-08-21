@@ -86,7 +86,7 @@ public class StallsActivity extends AppCompatActivity {
                 Stall stall = (Stall)parent.getItemAtPosition(arg2);
 
                 stallintent = new Intent(getApplicationContext(), editStallActivity.class);
-                stallintent.putExtra("com.example.MAIN_MESSAGE", Integer.toString(stall.getstall_id()));
+                stallintent.putExtra("stall_id", Integer.toString(stall.getstall_id()));
                 startActivity(stallintent);
             }
         });

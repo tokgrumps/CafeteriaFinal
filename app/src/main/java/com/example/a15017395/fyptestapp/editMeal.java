@@ -27,13 +27,14 @@ public class editMeal extends AppCompatActivity {
         super.onStart();
 
         Intent intent = getIntent();
-        meal_id = intent.getStringExtra("com.example.MAIN_MESSAGE");
+        meal_id = intent.getStringExtra("meal_id");
         HttpRequest request= new HttpRequest("https://night-vibes.000webhostapp.com/getMealDetail.php?meal_id=" + meal_id);
         request.setMethod("GET");
         request.execute();
 
         try{
             String jsonString = request.getResponse();
+            System.out.println(jsonString);
             JSONObject jsonObj = new JSONObject(jsonString);
             // TODO 01: Set values in the EditText fields
 
@@ -88,7 +89,7 @@ public class editMeal extends AppCompatActivity {
         request.setMethod("POST");
 
 
-        request.addData("id", meal_id);
+        request.addData("meal_id", meal_id);
         request.execute();
 
 

@@ -27,7 +27,7 @@ public class editStallActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-        Id = intent.getStringExtra("com.example.MAIN_MESSAGE");
+        Id = intent.getStringExtra("stall_id");
         HttpRequest request = new HttpRequest("https://night-vibes.000webhostapp.com/getOutletDetail.php?Id=" + Id);
         request.setMethod("GET");
         request.execute();
